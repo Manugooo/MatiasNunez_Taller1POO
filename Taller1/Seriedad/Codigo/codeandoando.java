@@ -3,6 +3,9 @@ package Codigo;
 
 import java.io.File;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class codeandoando {
 	public static void main(String[] args) {
@@ -139,6 +142,9 @@ public class codeandoando {
 				System.out.println("Error, Ingrese una opción válida:");
 				eleccionmenu = entradamenu.nextLine();
 			}
+			if (eleccionmenu.equals("1")) {
+				registrarnuevaactividad(nomusuario, entradamenu);
+			}
 
 			if (eleccionmenu.equals("5")) {
 				System.out.println("Has salido del programa exitosamente");
@@ -157,14 +163,14 @@ public class codeandoando {
 				System.out.println("5) Salir");
 				Scanner entradaeleccion2 = new Scanner(System.in);
 				String eleccion2 = entradaeleccion2.nextLine();
-				while (!eleccion2.equals("1") && !eleccion2.equals("2") && !eleccion2.equals("3") && !eleccion2.equals("4")
-						&& !eleccion2.equals("5")) {
+				while (!eleccion2.equals("1") && !eleccion2.equals("2") && !eleccion2.equals("3")
+						&& !eleccion2.equals("4") && !eleccion2.equals("5")) {
 					System.out.println("Error, Ingrese una opción válida:");
 					eleccion2 = entradaeleccion2.nextLine();
 				}
 				// En esta parte ya comienzo a trabajar con las listas paralelas de actividades
 				// y cuntas veces se repiten, para sacar la más realizada
-				
+
 				if (eleccion2.equals("1")) {
 					for (int i3 = 0; i3 < j2; i3 += 1) {
 						String actividadactual = actividad[i3];
@@ -202,7 +208,7 @@ public class codeandoando {
 						int[] horasusuario = new int[j2];
 						int[] contadorusuario = new int[j2];
 						int actividadesunicas = 0;
-		
+
 						for (int p = 0; p < j2; p += 1) {
 							if (usuarioregistro[p].equals(usuarioactual)) {
 								String actividadactual = actividad[p];
@@ -215,11 +221,11 @@ public class codeandoando {
 										break;
 									}
 								}
-									if (!encontrado) {
-										actividadesusuario[actividadesunicas] = actividadactual;
-										horasusuario[actividadesunicas] = añadirhoras;
-										actividadesunicas += 1;
-									}
+								if (!encontrado) {
+									actividadesusuario[actividadesunicas] = actividadactual;
+									horasusuario[actividadesunicas] = añadirhoras;
+									actividadesunicas += 1;
+								}
 							}
 						}
 						if (actividadesunicas > 0) {
@@ -231,22 +237,22 @@ public class codeandoando {
 									actividadmaxusuario = actividadesusuario[r];
 								}
 							}
-							System.out.println("* " + usuarioactual + " -> " + actividadmaxusuario + " -> con  " + maxhoras
-									+ " horas registradas");
+							System.out.println("* " + usuarioactual + " -> " + actividadmaxusuario + " -> con  "
+									+ maxhoras + " horas registradas");
 						}
 					}
 				}
 				if (eleccion2.equals("3")) {
 					int[] horastotales = new int[usuarios.length];
-					for ( int s = 0; s < usuarios.length; s += 1) {
+					for (int s = 0; s < usuarios.length; s += 1) {
 						String usuarioactual = usuarios[s];
 						int horasusuario = 0;
 						for (int t = 0; t < j2; t += 1) {
-							if(usuarioregistro[t].equals(usuarioactual)) {
+							if (usuarioregistro[t].equals(usuarioactual)) {
 								horasusuario += Integer.parseInt(horas[t]);
 							}
-						horastotales[s] = horasusuario;
-						}	
+							horastotales[s] = horasusuario;
+						}
 					}
 					int maxhorastotales = horastotales[0];
 					String usuarioprocastinador = usuarios[0];
@@ -256,8 +262,8 @@ public class codeandoando {
 							usuarioprocastinador = usuarios[ñ];
 						}
 					}
-				System.out.println("");
-				System.out.println("El usuario con mayor procastinación es: "+ usuarioprocastinador);
+					System.out.println("");
+					System.out.println("El usuario con mayor procastinación es: " + usuarioprocastinador);
 				}
 				if (eleccion2.equals("4")) {
 					for (int i3 = 0; i3 < j2; i3 += 1) {
@@ -288,14 +294,14 @@ public class codeandoando {
 					System.out.println("");
 					System.out.println("Actividades más realizadas por cada usuario: ");
 					System.out.println("");
-					// ahora comienzo con mi desarrollo para la opcion 2
+
 					for (int o = 0; o < usuarios.length; o += 1) {
 						String usuarioactual = usuarios[o];
 						String[] actividadesusuario = new String[j2];
 						int[] horasusuario = new int[j2];
 						int[] contadorusuario = new int[j2];
 						int actividadesunicas = 0;
-		
+
 						for (int p = 0; p < j2; p += 1) {
 							if (usuarioregistro[p].equals(usuarioactual)) {
 								String actividadactual = actividad[p];
@@ -308,11 +314,11 @@ public class codeandoando {
 										break;
 									}
 								}
-									if (!encontrado) {
-										actividadesusuario[actividadesunicas] = actividadactual;
-										horasusuario[actividadesunicas] = añadirhoras;
-										actividadesunicas += 1;
-									}
+								if (!encontrado) {
+									actividadesusuario[actividadesunicas] = actividadactual;
+									horasusuario[actividadesunicas] = añadirhoras;
+									actividadesunicas += 1;
+								}
 							}
 						}
 						if (actividadesunicas > 0) {
@@ -324,20 +330,20 @@ public class codeandoando {
 									actividadmaxusuario = actividadesusuario[r];
 								}
 							}
-							System.out.println("* " + usuarioactual + " -> " + actividadmaxusuario + " -> con  " + maxhoras
-									+ " horas registradas");
+							System.out.println("* " + usuarioactual + " -> " + actividadmaxusuario + " -> con  "
+									+ maxhoras + " horas registradas");
 						}
 					}
 					int[] horastotales = new int[usuarios.length];
-					for ( int s = 0; s < usuarios.length; s += 1) {
+					for (int s = 0; s < usuarios.length; s += 1) {
 						String usuarioactual = usuarios[s];
 						int horasusuario = 0;
 						for (int t = 0; t < j2; t += 1) {
-							if(usuarioregistro[t].equals(usuarioactual)) {
+							if (usuarioregistro[t].equals(usuarioactual)) {
 								horasusuario += Integer.parseInt(horas[t]);
 							}
-						horastotales[s] = horasusuario;
-						}	
+							horastotales[s] = horasusuario;
+						}
 					}
 					int maxhorastotales = horastotales[0];
 					String usuarioprocastinador = usuarios[0];
@@ -347,10 +353,9 @@ public class codeandoando {
 							usuarioprocastinador = usuarios[ñ];
 						}
 					}
-				System.out.println("");
-				System.out.println("El usuario con mayor procastinación es: "+ usuarioprocastinador);
+					System.out.println("");
+					System.out.println("El usuario con mayor procastinación es: " + usuarioprocastinador);
 				}
-				
 				if (eleccion2.equals("5")) {
 					System.out.println("Has salido del programa exitosamente");
 					System.exit(0);
@@ -360,6 +365,83 @@ public class codeandoando {
 		if (eleccion.equals("3")) {
 			System.out.println("Has salido del programa exitosamente");
 			System.exit(0);
+		}
+	}
+
+//creo un subprograma que me permita registrar una nueva actividad, y controlo errores
+	public static void registrarnuevaactividad(String nomusuario, Scanner entrada) {
+		int dia = 0;
+		boolean diavalido = false;
+		while (!diavalido) {
+			System.out.print("Ingrese el día (Mayor que 0 y menor que 32 y escrito): ");
+			try {
+				dia = Integer.parseInt(entrada.nextLine());
+				if (dia > 0 && dia <= 31) {
+					diavalido = true;
+				} else {
+					System.out.println("Error, Ingrese una opción válida:");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Error, Ingrese una opción valida: ");
 			}
 		}
+		int mes = 0;
+		boolean mesvalido = false;
+		while (!mesvalido) {
+			System.out.print("Ingrese el mes (Mayor que 0 y menor que 13 y escrito): ");
+			try {
+				mes = Integer.parseInt(entrada.nextLine());
+				if (mes > 0 && mes <= 12) {
+					mesvalido = true;
+				} else {
+					System.out.println("Error, Ingrese una opción válida:");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Error, Ingrese una opción valida: ");
+			}
+		}
+		System.out.print("Ingrese el año (2025 o 2026): ");
+		String año = entrada.nextLine();
+		while (!año.equals("2025") && !año.equals("2026")) {
+			System.out.println("Error, Ingrese una opción válida:");
+			año = entrada.nextLine();
+		}
+		String fecha = dia + "/" + mes + "/" + año;
+		int choras = 0;
+		boolean chorasvalidas = false;
+		while (!chorasvalidas) {
+			System.out.print("Ingrese las horas que realizó dicha actividad: ");
+			try {
+				choras = Integer.parseInt(entrada.nextLine());
+				chorasvalidas = true;
+			} catch (NumberFormatException e) {
+				System.out.println("Error, Ingrese una opción válida");
+			}
+		}
+		String actividad = "";
+		boolean actividadvalida = false;
+		while (!actividadvalida) {
+			System.out.print("Ingrese actividad: ");
+			actividad = entrada.nextLine();
+			if (actividad.contains(";")) {
+				System.out.println("Error, no puede contener (;)");
+			} else {
+				actividadvalida = true;
+			}
+		}
+		String lineanueva = nomusuario + ";" + fecha + ";" + choras + ";" + actividad;
+		try {
+			FileWriter archivo = new FileWriter("archivos/Registros.txt", true);
+			BufferedWriter entradaescritura = new BufferedWriter(archivo);
+			entradaescritura.newLine();
+			entradaescritura.write(lineanueva);
+			entradaescritura.close();
+			System.out.println("ÉXITO");
+
+		} catch (IOException e) {
+			System.out.println("ERROR");
+		}
+
+	}
+
 }
