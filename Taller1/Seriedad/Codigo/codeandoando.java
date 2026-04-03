@@ -145,6 +145,9 @@ public class codeandoando {
 			if (eleccionmenu.equals("1")) {
 				registrarnuevaactividad(nomusuario, entradamenu);
 			}
+			if (eleccionmenu.equals("4")) {
+				cambiarcontraseña(posicionusuario, usuarios, contraseñas, entradamenu );
+			}
 
 			if (eleccionmenu.equals("5")) {
 				System.out.println("Has salido del programa exitosamente");
@@ -443,5 +446,24 @@ public class codeandoando {
 		}
 
 	}
-
+	public static void cambiarcontraseña(int posicionusuario, String[] usuarios, String[] contraseñas, Scanner entrada) {
+		System.out.print("Ingrese su nueva contraseña: ");
+		String nuevacontraseña = entrada.nextLine();
+		contraseñas[posicionusuario] = nuevacontraseña;
+		try {
+			FileWriter archivocontraseñas = new FileWriter("archivos/Usuarios.txt");
+			BufferedWriter entradaescritura = new BufferedWriter(archivocontraseñas);
+			for (int v = 0; v < usuarios.length; v += 1) {
+				if (usuarios[v] != null) {
+					String lineanuevausuarios = usuarios[v] + ";" + contraseñas[v];
+					entradaescritura.write(lineanuevausuarios);
+					entradaescritura.newLine();
+				}
+			}
+			entradaescritura.close();
+			System.out.println("ÉXITO");
+		} catch (IOException e) {
+			System.out.println("ERROR");
+		}
+	}
 }
