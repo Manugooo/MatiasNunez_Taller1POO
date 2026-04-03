@@ -164,6 +164,7 @@ public class codeandoando {
 				}
 				// En esta parte ya comienzo a trabajar con las listas paralelas de actividades
 				// y cuntas veces se repiten, para sacar la más realizada
+				
 				if (eleccion2.equals("1")) {
 					for (int i3 = 0; i3 < j2; i3 += 1) {
 						String actividadactual = actividad[i3];
@@ -235,6 +236,121 @@ public class codeandoando {
 						}
 					}
 				}
+				if (eleccion2.equals("3")) {
+					int[] horastotales = new int[usuarios.length];
+					for ( int s = 0; s < usuarios.length; s += 1) {
+						String usuarioactual = usuarios[s];
+						int horasusuario = 0;
+						for (int t = 0; t < j2; t += 1) {
+							if(usuarioregistro[t].equals(usuarioactual)) {
+								horasusuario += Integer.parseInt(horas[t]);
+							}
+						horastotales[s] = horasusuario;
+						}	
+					}
+					int maxhorastotales = horastotales[0];
+					String usuarioprocastinador = usuarios[0];
+					for (int ñ = 1; ñ < usuarios.length; ñ += 1) {
+						if (horastotales[ñ] > maxhorastotales) {
+							maxhorastotales = horastotales[ñ];
+							usuarioprocastinador = usuarios[ñ];
+						}
+					}
+				System.out.println("");
+				System.out.println("El usuario con mayor procastinación es: "+ usuarioprocastinador);
+				}
+				if (eleccion2.equals("4")) {
+					for (int i3 = 0; i3 < j2; i3 += 1) {
+						String actividadactual = actividad[i3];
+						boolean encontrado = false;
+						for (int k = 0; k < contadoreleccion2; k += 1) {
+							if (actividades[k].equals(actividadactual)) {
+								horasporactividad[k] += Integer.parseInt(horas[k]);
+								encontrado = true;
+								break;
+							}
+						}
+						if (!encontrado) {
+							actividades[contadoreleccion2] = actividadactual;
+							horasporactividad[contadoreleccion2] = Integer.parseInt(horas[i3]);
+							contadoreleccion2 += 1;
+						}
+					}
+					int max = horasporactividad[0];
+					String actividadmax = actividades[0];
+					for (int i = 1; i < contadoreleccion2; i += 1) {
+						if (horasporactividad[i] > max) {
+							max = horasporactividad[i];
+							actividadmax = actividades[i];
+						}
+					}
+					System.out.println("La actividad más realizada es: " + actividadmax);
+					System.out.println("");
+					System.out.println("Actividades más realizadas por cada usuario: ");
+					System.out.println("");
+					// ahora comienzo con mi desarrollo para la opcion 2
+					for (int o = 0; o < usuarios.length; o += 1) {
+						String usuarioactual = usuarios[o];
+						String[] actividadesusuario = new String[j2];
+						int[] horasusuario = new int[j2];
+						int[] contadorusuario = new int[j2];
+						int actividadesunicas = 0;
+		
+						for (int p = 0; p < j2; p += 1) {
+							if (usuarioregistro[p].equals(usuarioactual)) {
+								String actividadactual = actividad[p];
+								int añadirhoras = Integer.parseInt(horas[p]);
+								boolean encontrado = false;
+								for (int q = 0; q < actividadesunicas; q += 1) {
+									if (actividadesusuario[q].equals(actividadactual)) {
+										horasusuario[q] += añadirhoras;
+										encontrado = true;
+										break;
+									}
+								}
+									if (!encontrado) {
+										actividadesusuario[actividadesunicas] = actividadactual;
+										horasusuario[actividadesunicas] = añadirhoras;
+										actividadesunicas += 1;
+									}
+							}
+						}
+						if (actividadesunicas > 0) {
+							int maxhoras = horasusuario[0];
+							String actividadmaxusuario = actividadesusuario[0];
+							for (int r = 1; r < actividadesunicas; r += 1) {
+								if (horasusuario[r] > maxhoras) {
+									maxhoras = horasusuario[r];
+									actividadmaxusuario = actividadesusuario[r];
+								}
+							}
+							System.out.println("* " + usuarioactual + " -> " + actividadmaxusuario + " -> con  " + maxhoras
+									+ " horas registradas");
+						}
+					}
+					int[] horastotales = new int[usuarios.length];
+					for ( int s = 0; s < usuarios.length; s += 1) {
+						String usuarioactual = usuarios[s];
+						int horasusuario = 0;
+						for (int t = 0; t < j2; t += 1) {
+							if(usuarioregistro[t].equals(usuarioactual)) {
+								horasusuario += Integer.parseInt(horas[t]);
+							}
+						horastotales[s] = horasusuario;
+						}	
+					}
+					int maxhorastotales = horastotales[0];
+					String usuarioprocastinador = usuarios[0];
+					for (int ñ = 1; ñ < usuarios.length; ñ += 1) {
+						if (horastotales[ñ] > maxhorastotales) {
+							maxhorastotales = horastotales[ñ];
+							usuarioprocastinador = usuarios[ñ];
+						}
+					}
+				System.out.println("");
+				System.out.println("El usuario con mayor procastinación es: "+ usuarioprocastinador);
+				}
+				
 				if (eleccion2.equals("5")) {
 					System.out.println("Has salido del programa exitosamente");
 					System.exit(0);
