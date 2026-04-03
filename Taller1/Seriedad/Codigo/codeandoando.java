@@ -14,7 +14,12 @@ public class codeandoando {
 		String[] fechas;
 		String[] horas;
 		String[] actividad;
-
+		String[] actividades = new String[300];
+		int[] contadoractividades = new int[300];
+		int 
+				
+				
+		
 		File archivo = new File("archivos/Usuarios.txt");
 		try {
 			// busco la dimensión de mis arreglos
@@ -89,6 +94,9 @@ public class codeandoando {
 		} catch (Exception e) {
 			System.out.println("Error en la lectura de archivo");
 		}
+		
+		while ()
+		
 		// Inicio del menú
 		System.out.println("1) Menu de Usuarios");
 		System.out.println("2) Menu de Analisis");
@@ -103,7 +111,6 @@ public class codeandoando {
 		// Desarrollo de la opción 1
 
 		if (eleccion.equals("1"))
-			;
 		{
 			int posicionusuario = -1;
 			Scanner entradausuario = new Scanner(System.in);
@@ -139,7 +146,7 @@ public class codeandoando {
 			}
 			
 			//Desarrollo menu de usuario
-			System.out.println("Bienvenido" + nomusuario + "!");
+			System.out.println("Bienvenido " + nomusuario + "!");
 			System.out.println("");
 			System.out.println("Que deseas realizar?");
 			System.out.println("1) Registrar actividad.");
@@ -147,9 +154,52 @@ public class codeandoando {
 			System.out.println("3) Eliminar actividad.");
 			System.out.println("4) Cambiar contraseña.");
 			System.out.println("5) Salir.");
+			Scanner entradamenu = new Scanner(System.in);
+			String eleccionmenu = entradamenu.nextLine();
+			while (!eleccionmenu.equals("1") && !eleccionmenu.equals("2") && !eleccionmenu.equals("3") && !eleccionmenu.equals("4") && !eleccionmenu.equals("5")) {
+				System.out.println("Error, Ingrese una opción válida:");
+				eleccionmenu = entradamenu.nextLine();
+			}
+
 			
-
+			
+			if (eleccionmenu.equals("5"))
+			{
+				System.out.println("Has salido del programa exitosamente");
+				System.exit(0);
+			}
 		}
-
+		if (eleccion.equals("2"))
+		{
+			System.out.println("Bienvenido al menú de analisis!");
+			System.out.println(" ");
+			System.out.println("1) Actividad más realizada");
+			System.out.println("2) Actividad más realizada por cada usuario");
+			System.out.println("3) Usuario con mayor procastinación");
+			System.out.println("4) Ver todas las actividades");
+			System.out.println("5) Salir");
+			Scanner entradaeleccion2 = new Scanner(System.in);
+			String eleccion2 = entradaeleccion2.nextLine();
+			while (!eleccion2.equals("1") && !eleccion2.equals("2") && !eleccion2.equals("3") && !eleccion2.equals("4") && !eleccion2.equals("5")) {
+				System.out.println("Error, Ingrese una opción válida:");
+				eleccion2 = entradaeleccion2.nextLine();
+			}
+			
+			if (eleccion2.equals("1"))
+			{
+				for (int i3 = 0; i3<n:)
+			}
+			
+			if (eleccion2.equals("5"))
+			{
+				System.out.println("Has salido del programa exitosamente");
+				System.exit(0);
+			}
+		}
+		if (eleccion.equals("3"))
+		{
+			System.out.println("Has salido del programa exitosamente");
+			System.exit(0);
+		}
 	}
 }
