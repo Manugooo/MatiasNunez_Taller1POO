@@ -12,7 +12,7 @@ public class codeandoando {
 		String[] usuarios = null;
 		String[] contraseñas = null;
 		String[] usuarioregistro = null;
-		String[] fechas;
+		String[] fechas = null;
 		String[] horas = null;
 		String[] actividad = null;
 		String[] actividades = new String[300];
@@ -127,31 +127,34 @@ public class codeandoando {
 				probarcontraseña = entradacontraseña.nextLine();
 			}
 			// Desarrollo menu de usuario
-			System.out.println("Bienvenido " + nomusuario + "!");
-			System.out.println("");
-			System.out.println("Que deseas realizar?");
-			System.out.println("1) Registrar actividad.");
-			System.out.println("2) Modificar actividad.");
-			System.out.println("3) Eliminar actividad.");
-			System.out.println("4) Cambiar contraseña.");
-			System.out.println("5) Salir.");
-			Scanner entradamenu = new Scanner(System.in);
-			String eleccionmenu = entradamenu.nextLine();
-			while (!eleccionmenu.equals("1") && !eleccionmenu.equals("2") && !eleccionmenu.equals("3")
-					&& !eleccionmenu.equals("4") && !eleccionmenu.equals("5")) {
-				System.out.println("Error, Ingrese una opción válida:");
-				eleccionmenu = entradamenu.nextLine();
-			}
-			if (eleccionmenu.equals("1")) {
-				registrarnuevaactividad(nomusuario, entradamenu);
-			}
-			if (eleccionmenu.equals("4")) {
-				cambiarcontraseña(posicionusuario, usuarios, contraseñas, entradamenu );
-			}
+			while (true) {
+				System.out.println("Bienvenido " + nomusuario + "!");
+				System.out.println("");
+				System.out.println("Que deseas realizar?");
+				System.out.println("1) Registrar actividad.");
+				System.out.println("2) Modificar actividad.");
+				System.out.println("3) Eliminar actividad.");
+				System.out.println("4) Cambiar contraseña.");
+				System.out.println("5) Salir.");
+				Scanner entradamenu = new Scanner(System.in);
+				String eleccionmenu = entradamenu.nextLine();
+				while (!eleccionmenu.equals("1") && !eleccionmenu.equals("2") && !eleccionmenu.equals("3")
+						&& !eleccionmenu.equals("4") && !eleccionmenu.equals("5")) {
+					System.out.println("Error, Ingrese una opción válida:");
+					eleccionmenu = entradamenu.nextLine();
+				}
+				if (eleccionmenu.equals("1")) {
+					registrarnuevaactividad(nomusuario, entradamenu);
+				} else if (eleccionmenu.equals("3")) {
+					eliminaractividad(nomusuario, usuarioregistro, fechas, horas, actividad, entradamenu);
+				} else if (eleccionmenu.equals("4")) {
+					cambiarcontraseña(posicionusuario, usuarios, contraseñas, entradamenu);
+				}
 
-			if (eleccionmenu.equals("5")) {
-				System.out.println("Has salido del programa exitosamente");
-				System.exit(0);
+				else if (eleccionmenu.equals("5")) {
+					System.out.println("Has salido del programa exitosamente");
+					System.exit(0);
+				}
 			}
 		}
 		if (eleccion.equals("2")) {
@@ -446,7 +449,9 @@ public class codeandoando {
 		}
 
 	}
-	public static void cambiarcontraseña(int posicionusuario, String[] usuarios, String[] contraseñas, Scanner entrada) {
+
+	public static void cambiarcontraseña(int posicionusuario, String[] usuarios, String[] contraseñas,
+			Scanner entrada) {
 		System.out.print("Ingrese su nueva contraseña: ");
 		String nuevacontraseña = entrada.nextLine();
 		contraseñas[posicionusuario] = nuevacontraseña;
@@ -466,4 +471,66 @@ public class codeandoando {
 			System.out.println("ERROR");
 		}
 	}
+
+	public static void eliminaractividad(String nomusuario, String[] usuarioregistro, String[] fechas, String[] horas,
+			String[] actividad, Scanner entrada) {
+		System.out.println("¿Qué actividad deseas borrar? (o 0 para regresar)");
+		int[] indicesreales = new int[usuarioregistro.length];
+		int contadoropciones = 1;
+		System.out.println("0) Regresar");
+		for (int w = 0; w < usuarioregistro.length; w += 1) {
+			if (usuarioregistro[w] != null && usuarioregistro[w].equals(nomusuario)) {
+				System.out.println(contadoropciones + ")" + " " + fechas[w] + " " + horas[w] + " " + actividad[w]);
+				indicesreales[contadoropciones] = w;
+				contadoropciones += 1;
+			}
+		}
+		if (contadoropciones == 1) {
+			System.out.println("No puedes borrar ninguna actividad");
+			return;
+		}
+		int opcionelegida = 0;
+		boolean opcionvalida = false;
+		while (!opcionvalida) {
+			System.out.println("Ingrese la opción que desea eliminar: ");
+			try {
+				opcionelegida = Integer.parseInt(entrada.nextLine());
+				if (opcionelegida >= 0 && opcionelegida < contadoropciones) {
+					opcionvalida = true;
+				} else {
+					System.out.println("ERROR");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("ERROR");
+
+			}
+		}
+		if (opcionelegida == 0) {
+			System.out.println("Te arrepentiste, volviendo...");
+			System.out.println(".............................");
+			return;
+		}
+		int eliminarindice = indicesreales[opcionelegida];
+		usuarioregistro[eliminarindice] = null;
+		fechas[eliminarindice] = null;
+		horas[eliminarindice] = null;
+		actividad[eliminarindice] = null;
+		try {
+			FileWriter archivoregistros = new FileWriter("archivos/Registros.txt");
+			BufferedWriter entradaescritura = new BufferedWriter(archivoregistros);
+			for (int x = 0; x < usuarioregistro.length; x += 1) {
+				if (usuarioregistro[x] != null && !usuarioregistro[x].trim().isEmpty()) {
+					String lineanuevaregistro = usuarioregistro[x] + ";" + fechas[x] + ";" + horas[x] + ";"
+							+ actividad[x];
+					entradaescritura.write(lineanuevaregistro);
+					entradaescritura.newLine();
+				}
+			}
+			entradaescritura.close();
+			System.out.println("ÉXITO");
+		} catch (Exception e) {
+			System.out.println("ERROR");
+		}
+	}
+
 }
