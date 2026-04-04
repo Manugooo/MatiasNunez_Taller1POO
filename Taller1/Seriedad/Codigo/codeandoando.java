@@ -145,6 +145,8 @@ public class codeandoando {
 				}
 				if (eleccionmenu.equals("1")) {
 					registrarnuevaactividad(nomusuario, entradamenu);
+				} else if (eleccionmenu.equals("2")) {
+					modificaractividad(nomusuario, usuarioregistro, fechas, horas, actividad, entradamenu);
 				} else if (eleccionmenu.equals("3")) {
 					eliminaractividad(nomusuario, usuarioregistro, fechas, horas, actividad, entradamenu);
 				} else if (eleccionmenu.equals("4")) {
@@ -439,8 +441,8 @@ public class codeandoando {
 		try {
 			FileWriter archivo = new FileWriter("archivos/Registros.txt", true);
 			BufferedWriter entradaescritura = new BufferedWriter(archivo);
-			entradaescritura.newLine();
 			entradaescritura.write(lineanueva);
+			entradaescritura.newLine();
 			entradaescritura.close();
 			System.out.println("ÉXITO");
 
@@ -528,6 +530,151 @@ public class codeandoando {
 			}
 			entradaescritura.close();
 			System.out.println("ÉXITO");
+		} catch (Exception e) {
+			System.out.println("ERROR");
+		}
+	}
+
+	public static void modificaractividad(String nomusuario, String[] usuarioregistro, String[] fechas, String[] horas,
+			String[] actividad, Scanner entrada) {
+		System.out.println("¿Qué actividad deseas modificar?");
+		System.out.println("0) Regresar.");
+		int[] indicesreales = new int[usuarioregistro.length];
+		int contadoropciones = 1;
+		for (int y = 0; y < usuarioregistro.length; y += 1) {
+			if (usuarioregistro[y] != null && usuarioregistro[y].equals(nomusuario)) {
+				System.out.println(contadoropciones + ") " + usuarioregistro[y] + ";" + fechas[y] + ";" + horas[y] + ";"
+						+ actividad[y]);
+				indicesreales[contadoropciones] = y;
+				contadoropciones += 1;
+			}
+		}
+		if (contadoropciones == 1) {
+			System.out.println("No puedes modificar ninguna actividad");
+			return;
+		}
+		System.out.println("");
+		int opcionelegida = -1;
+		try {
+			opcionelegida = Integer.parseInt(entrada.nextLine());
+		} catch (NumberFormatException e) {
+			System.out.println("ERROR");
+			return;
+		}
+		if (opcionelegida == 0) {
+			return;
+
+		}
+		if (opcionelegida < 1 || opcionelegida >= contadoropciones) {
+			System.out.println("ERROR");
+			return;
+		}
+		int modificarindice = indicesreales[opcionelegida];
+		System.out.println("Que deseas modificar?\n");
+		System.out.println("0) Regresar.");
+		System.out.println("1) Fecha");
+		System.out.println("2) Duracion");
+		System.out.println("3) Tipo de actividad");
+		System.out.println("");
+		int modificar = -1;
+		try {
+			modificar = Integer.parseInt(entrada.nextLine());
+		} catch (NumberFormatException e) {
+			System.out.println("ERROR");
+			return;
+		}
+		if (modificar == 0) {
+			return;
+		}
+		System.out.println("0) Regresar ");
+		if (modificar == 1) {
+			int dia = 0;
+			boolean diavalido = false;
+			while (!diavalido) {
+				System.out.print("Ingrese el día (Mayor que 0 y menor que 32 y escrito): ");
+				try {
+					dia = Integer.parseInt(entrada.nextLine());
+					if (dia > 0 && dia <= 31) {
+						diavalido = true;
+					} else {
+						System.out.println("Error, Ingrese una opción válida:");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Error, Ingrese una opción valida: ");
+				}
+			}
+			int mes = 0;
+			boolean mesvalido = false;
+			while (!mesvalido) {
+				System.out.print("Ingrese el mes (Mayor que 0 y menor que 13 y escrito): ");
+				try {
+					mes = Integer.parseInt(entrada.nextLine());
+					if (mes > 0 && mes <= 12) {
+						mesvalido = true;
+					} else {
+						System.out.println("Error, Ingrese una opción válida:");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Error, Ingrese una opción valida: ");
+				}
+			}
+			System.out.print("Ingrese el año (2025 o 2026): ");
+			String año = entrada.nextLine();
+			while (!año.equals("2025") && !año.equals("2026")) {
+				System.out.println("Error, Ingrese una opción válida:");
+				año = entrada.nextLine();
+			}
+			String fecha = dia + "/" + mes + "/" + año;
+			String nuevafecha = fecha;
+			fechas[modificarindice] = nuevafecha;
+
+		} else if (modificar == 2) {
+			int nuevahora = 0;
+			boolean horavalida = false;
+			while (!horavalida) {
+				System.out.print("Ingrese cuantas horas realizó la actividad: ");
+				try {
+					nuevahora = Integer.parseInt(entrada.nextLine());
+					if (nuevahora > 0) {
+						horavalida = true;
+					} else {
+						System.out.println("Error, Ingrese una opción válida:");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Error, Ingrese una opción valida: ");
+				}
+			}
+
+			horas[modificarindice] = nuevahora + "";
+
+		} else if (modificar == 3) {
+			System.out.println("Ingrese nuevo tipo de actividad: ");
+			String nuevaactividad = entrada.nextLine();
+			while (nuevaactividad.contains(";")) {
+				System.out.println("Ingrese nuevamente y no ingrese (;)");
+				nuevaactividad = entrada.nextLine();
+
+			}
+			actividad[modificarindice] = nuevaactividad;
+
+		} else {
+			System.out.println("ERROR");
+			return;
+		}
+		try {
+			FileWriter archivomodificar = new FileWriter("archivos/Registros.txt");
+			BufferedWriter entradamodificar = new BufferedWriter(archivomodificar);
+			for (int z = 0; z < usuarioregistro.length; z += 1) {
+				if (usuarioregistro[z] != null && !usuarioregistro[z].trim().isEmpty()) {
+					String lineanuevamodificar = usuarioregistro[z] + ";" + fechas[z] + ";" + horas[z] + ";"
+							+ actividad[z];
+					entradamodificar.write(lineanuevamodificar);
+					entradamodificar.newLine();
+				}
+			}
+			entradamodificar.close();
+			System.out.println("ÉXITO");
+
 		} catch (Exception e) {
 			System.out.println("ERROR");
 		}
